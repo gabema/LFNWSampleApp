@@ -15,6 +15,11 @@ import android.util.Log;
 /**
  * Demonstrates how a ContentProvider could be backed by memory.<br/>
  * Rows can be inserted and as long as they contain the necessary fields can be queried.<br/>
+ * Todo:
+ * <ol>
+ * <li> Support deleting rows
+ * <li> Support querying by row
+ * </ol>
  * Usage:
  * <code>
  * root@android:/ # content insert --uri content://lfnwsimple --bind test:s:hello --bind test2:s:world
@@ -82,6 +87,13 @@ public class SimpleProvider extends ContentProvider {
 		return cursor;
 	}
 
+	@Override
+	public int update(Uri uri, ContentValues values, String selection,
+			String[] selectionArgs) {
+		// TODO: Implement this to handle requests to update one or more rows.
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
+
 	/**
 	 * Returns an array of Objects if map contains all the fieldNames specified in the projection
 	 * @param row
@@ -109,14 +121,6 @@ public class SimpleProvider extends ContentProvider {
 		return values;
 	}
 
-	@Override
-	public int update(Uri uri, ContentValues values, String selection,
-			String[] selectionArgs) {
-		// TODO: Implement this to handle requests to update one or more rows.
-		throw new UnsupportedOperationException("Not yet implemented");
-	}
-
-	List<Map<String, Object>> m_data;
-
 	private static final String TAG = "SimpleProvider";
+	private List<Map<String, Object>> m_data;
 }
