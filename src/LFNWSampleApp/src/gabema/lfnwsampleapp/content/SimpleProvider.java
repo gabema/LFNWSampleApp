@@ -1,4 +1,4 @@
-package gabema.lfnwsampleapp;
+package gabema.lfnwsampleapp.content;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +8,6 @@ import java.util.Map;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.MatrixCursor;
 import android.net.Uri;
 import android.util.Log;
 
@@ -76,15 +75,8 @@ public class SimpleProvider extends ContentProvider {
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 		Log.i(TAG, "query(...)");
-		MatrixCursor cursor = new MatrixCursor(projection);
-		for (Map<String, Object> row : m_data)
-		{
-			Object[] columnValues = tryGetValuesForProjection(row, projection);
-			if (columnValues != null)
-				cursor.addRow(columnValues);
-		}
 
-		return cursor;
+		return ContentProviderUtility.createMatrixCursor(m_data, projection);
 	}
 
 	@Override
@@ -92,33 +84,6 @@ public class SimpleProvider extends ContentProvider {
 			String[] selectionArgs) {
 		// TODO: Implement this to handle requests to update one or more rows.
 		throw new UnsupportedOperationException("Not yet implemented");
-	}
-
-	/**
-	 * Returns an array of Objects if map contains all the fieldNames specified in the projection
-	 * @param row
-	 * @param projection
-	 * @return An Object[] of fieldValues or null if there was an unmatched fieldName in the projection.
-	 */
-	private Object[] tryGetValuesForProjection(Map<String, Object> row,
-			String[] projection) {
-
-		Object[] values = new Object[projection.length];
-		int index = 0;
-		for (String fieldName : projection)
-		{
-			if (row.containsKey(fieldName))
-			{
-				values[index++] = row.get(fieldName);
-			}
-			else
-			{
-				// this row does not have all field mappings so break
-				values = null;
-				break;
-			}
-		}
-		return values;
 	}
 
 	private static final String TAG = "SimpleProvider";

@@ -1,4 +1,10 @@
-package gabema.lfnwsampleapp;
+package gabema.lfnwsampleapp.content;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -7,7 +13,7 @@ import android.database.MatrixCursor;
 import android.net.Uri;
 
 /**
- * Demonstrates how a ContentProvider could be backed by a webservice.
+ * Demonstrates how a ContentProvider could be backed by web content.
  * @author Gabe Martin
  */
 public class SampleWebProvider extends ContentProvider {
@@ -33,16 +39,47 @@ public class SampleWebProvider extends ContentProvider {
 
 	@Override
 	public boolean onCreate() {
-		// TODO: Implement this to initialize your content provider on startup.
-		return false;
+		return true;
 	}
 
+	/**
+	 * Querying requires selectionArgs[0] to contain a URI (network or local) to JSON content.
+	 */
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder)
 	{
-		MatrixCursor cursor = new MatrixCursor(new String[] {"Test1", "Test2"});
-		cursor.addRow(new String[] { "Hello", "World" });
+		MatrixCursor cursor = null;
+		StringBuilder builder = new StringBuilder();
+		BufferedReader reader = null;
+		try {
+			URL url = new URL(selection);
+			reader = new BufferedReader(new InputStreamReader(url.openStream()));
+			String input = reader.readLine();
+			while (input != null)
+			{
+				builder.append(input).append('\n');
+				input = reader.readLine();
+			}
+
+			cursor = new MatrixCursor(new String[] { "data" });
+			cursor.addRow(new Object[] { builder.toString() });
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (reader != null)
+			{
+				try {
+					reader.close();
+				} catch (IOException ioEx) {
+					ioEx.printStackTrace();
+				}
+			}
+		}
+		
+
 		return cursor;
 	}
 

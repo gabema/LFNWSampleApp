@@ -7,6 +7,7 @@
     <uses-sdk
         android:minSdkVersion="7"
         android:targetSdkVersion="17" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -24,13 +25,13 @@
         </activity>
 
         <provider
-            android:name="gabema.lfnwsampleapp.SampleWebProvider"
-            android:authorities="swp"
+            android:name="gabema.lfnwsampleapp.content.SampleWebProvider"
+            android:authorities="lfnwweb"
             android:enabled="true"
             android:exported="true" >
         </provider>
         <provider
-            android:name="gabema.lfnwsampleapp.SimpleProvider"
+            android:name="gabema.lfnwsampleapp.content.SimpleProvider"
             android:authorities="lfnwsimple"
             android:enabled="true"
             android:exported="true" >
