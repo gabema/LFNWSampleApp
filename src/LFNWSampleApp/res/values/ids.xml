@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<item type="id" name="commandLineFragment" />
+	<item type="id" name="sourceCodeFragment" />
+	<item type="id" name="slideShowFragment" />
+</resources>

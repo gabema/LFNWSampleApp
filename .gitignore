@@ -12,6 +12,9 @@
 bin/
 gen/
 
+# symlinked source files
+assets/src/
+
 # Local configuration file (sdk path, etc)
 local.properties
 
