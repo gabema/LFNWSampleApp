@@ -6,9 +6,15 @@
     <Spinner android:id="@+id/spinner"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/source"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textIsSelectable="true" />
+    <ScrollView
+         android:layout_width="match_parent"
+	        android:layout_height="wrap_content">
+	    <TextView
+	        android:id="@+id/source"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:scrollbars="vertical"
+	        android:textIsSelectable="true"
+	        />
+	</ScrollView>
 </LinearLayout>
